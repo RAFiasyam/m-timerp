@@ -67,10 +67,10 @@ function Timers() {
     };
 
     return (
-        <div>
-            <form onSubmit={handleAddItem}>
-                <input type="text" name="newItem" placeholder="Enter item name" />
-                <button type="submit">Add Item</button>
+        <div className='m-5'>
+            <form onSubmit={handleAddItem} className='flex flex-row gap-3 items-center justify-center'>
+                <input type="text" name="newItem" className="input input-bordered input-success w-full max-w-xs"  placeholder="Item name please..." />
+                <button type="submit" className='btn btn-success text-white'>Add Item</button>
             </form>
             {items.map((item, index) => (
                 <Timer
