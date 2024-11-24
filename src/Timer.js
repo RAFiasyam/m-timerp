@@ -49,7 +49,7 @@ function Timer({ name, onRemove }) {
     return (
         <div className="card bg-primary w-96 text-white">
             <div className="card-body items-center justify-center">
-                <h1 className="card-title">{name}</h1>
+                <h1 className="card-title">Ps Nomor : {name}</h1>
                 <h2>{formatTime(seconds)}</h2>
                 <h3>Earnings: Rp {earnings.toLocaleString('id-ID')}</h3>
                 <div className="card-actions justify-end">
@@ -69,17 +69,26 @@ function Timer({ name, onRemove }) {
 
 function Timers() {
     const [items, setItems] = useState([]);
+    const [newItem, setNewItem] = useState('');
 
     const handleAddItem = (event) => {
         event.preventDefault();
         const newItem = event.target.newItem.value;
 
-        if (newItem.trim()) {
-            setItems((prevItems) => [...prevItems, newItem]);
-            event.target.newItem.value = '';
-        } else {
-            alert('Masukan nomor ps dlu!!!');
+        if (newItem.trim() === '') {
+            alert('Masukan nomor ps dlu!');
+            return
         }
+
+        if (items.includes(newItem)) {
+            alert('Nomor Ps sudah digunakan, coba yg lain!');
+            return
+        }
+
+        setItems((prevItems) => [...prevItems, newItem]);
+        setNewItem('');
+
+
     };
 
     const removeItem = (index) => {
@@ -89,10 +98,11 @@ function Timers() {
     return (
         <div className="m-5 flex flex-col gap-5">
             <form onSubmit={handleAddItem} className="flex flex-row gap-3 items-center justify-center">
-                <input type="text" name="newItem" className="input input-bordered input-success w-full max-w-xs" placeholder="Nomor Ps" />
+                <input type="text" name="newItem" onChange={(e) => setNewItem(e.target.value)} className="input input-bordered input-success w-full max-w-xs" value={newItem} onChange={(e) => setNewItem(e.target.value)}
+                  placeholder="Nomor Ps" />
                 <button type="submit" className="btn btn-success text-white">Add Ps</button>
             </form>
-            <div className="flex flex-row gap-5">
+            <div className="flex flex-wrap gap-5 items-center justify-center">
                 {items.map((item, index) => (
                     <Timer
                         key={index}
