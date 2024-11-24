@@ -29,19 +29,21 @@ function Timer({ name, onRemove }) {
     };
 
     return (
-        <div>
-            <h1>{name}</h1>
-            <h2>{formatTime(seconds)}</h2>
-            <div>
-                <button onClick={startTimer} disabled={isRunning}>
-                    Start
-                </button>
-                <button onClick={stopTimer} disabled={!isRunning}>
-                    Stop
-                </button>
-                <button onClick={resetTimer}>Reset</button>
+        <div className="card bg-primary w-96 text-white">
+            <div className='card-body items-center justify-center'>
+                <h1 className='card-title'>{name}</h1>
+                <h2>{formatTime(seconds)}</h2>
+                <div className='card-actions justify-end'>
+                    <button className='btn btn-success text-white' onClick={startTimer} disabled={isRunning}>
+                        Start
+                    </button>
+                    <button className='btn btn-warning text-white' onClick={stopTimer} disabled={!isRunning}>
+                        Stop
+                    </button>
+                    <button className='btn btn-info text-white' onClick={resetTimer}>Reset</button>
+                    <button className='btn btn-error text-white' onClick={onRemove}>Remove</button>
+                </div>
             </div>
-            <button onClick={onRemove}>Remove</button>
         </div>
     );
 }
@@ -58,7 +60,7 @@ function Timers() {
             setItems((prevItems) => [...prevItems, newItem]);
             event.target.newItem.value = '';
         } else {
-            alert('enter an item name!!!🤬');
+            alert('enter an item name!!!');
         }
     };
 
@@ -67,18 +69,20 @@ function Timers() {
     };
 
     return (
-        <div className='m-5'>
+        <div className='m-5 flex flex-col gap-5'>
             <form onSubmit={handleAddItem} className='flex flex-row gap-3 items-center justify-center'>
-                <input type="text" name="newItem" className="input input-bordered input-success w-full max-w-xs"  placeholder="Item name please..." />
+                <input type="text" name="newItem" className="input input-bordered input-success w-full max-w-xs" placeholder="Item name please..." />
                 <button type="submit" className='btn btn-success text-white'>Add Item</button>
             </form>
-            {items.map((item, index) => (
-                <Timer
-                    key={index}
-                    name={item}
-                    onRemove={() => removeItem(index)}
-                />
-            ))}
+            <div className='flex flex-row gap-5'>
+                {items.map((item, index) => (
+                    <Timer
+                        key={index}
+                        name={item}
+                        onRemove={() => removeItem(index)}
+                    />
+                ))}
+            </div>
         </div>
     );
 };
